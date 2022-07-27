@@ -1,8 +1,7 @@
-﻿$search = New-Object System.DirectoryServices.DirectorySearcher
+$search = New-Object System.DirectoryServices.DirectorySearcher
 $search.SearchRoot = [ADSI]"LDAP://DC=domain,DC=com"
 
-$exclude = @('NetworkService','LocalService','systemprofile')
-$profiles = Get-WmiObject -ClassName Win32_UserProfile | Where-Object {$_.LocalPath.split('\')[-1] -notin $exclude}
+$profiles = Get-WmiObject -ClassName Win32_UserProfile
 
 foreach ($p in $profiles) {
     $user = $p.LocalPath.Split('\')[-1]
